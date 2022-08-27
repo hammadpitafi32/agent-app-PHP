@@ -41,5 +41,21 @@ class AppointmentRepository extends BaseRepository
         ], 200);
     }
 
+    public function getAppointments($request)
+    {
+    	if($request->has('date')){
+    		$appointments = $this->model::where('user_id',auth()->user()->id)->where('date',$request->date)->get();
+    	}else{
+    		$appointments = $this->model::where('user_id',auth()->user()->id)->get();
+    	}
+    	
+        
+        return response()->json([
+            'success' => true,
+            'data' => $appointments
+        ], 200);
+    }
+    
+
 
 }

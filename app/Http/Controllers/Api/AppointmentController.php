@@ -23,8 +23,11 @@ class AppointmentController extends Controller
         if ($response && $response->getStatusCode() == 400) {
             return $response;
         }
- 
-        $response = $this->appointmentRepo->create((array)$request->all());
+        $input=$request->all();
+        $date=date_create($input['date']);
+        $input['date']=date_format($date,"Y/m/d");
+        
+        $response = $this->appointmentRepo->create($input);
 
         return $response;
     }
@@ -55,6 +58,14 @@ class AppointmentController extends Controller
 
         /*validation end*/
         
+    }
+    // get Appointments
+    public function getAppointments(Request $request)
+    {
+
+        $response = $this->appointmentRepo->getAppointments($request);
+
+        return $response;
     }
 
 }
