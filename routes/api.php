@@ -19,6 +19,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-	Route::post('login', '\App\Http\Controllers\Api\UserController@login');
-    Route::post('register', '\App\Http\Controllers\Api\UserController@register');
+Route::post('login', '\App\Http\Controllers\Api\UserController@login');
+Route::post('register', '\App\Http\Controllers\Api\UserController@register');
 
+Route::group(['middleware' => 'auth:sanctum'], function () {
+	
+	// create appointment
+	Route::post('create-appointment', '\App\Http\Controllers\Api\AppointmentController@create');
+});
