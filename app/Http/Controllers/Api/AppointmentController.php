@@ -67,5 +67,31 @@ class AppointmentController extends Controller
 
         return $response;
     }
+    // Delete appointment
+    public function deleteAppointment($id)
+    {
+        
+        $response = $this->appointmentRepo->deleteAppointment($id);
+
+        return $response;
+    }
+    // Edit
+    public function updateAppointment(Request $request, $id) {
+ 
+        if (count($request->all())) {
+            
+            $input=$request->all();
+            $response = $this->appointmentRepo->editAppointment($input,$id);
+
+            return $response;
+        }
+
+        return response()->json([
+                'error' => 'Please change some value',
+                'success' => false
+        ], 400);
+        
+
+    }  
 
 }

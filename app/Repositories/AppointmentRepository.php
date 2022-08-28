@@ -55,6 +55,44 @@ class AppointmentRepository extends BaseRepository
             'data' => $appointments
         ], 200);
     }
+
+    public function deleteAppointment($id){
+
+    	$appointment = $this->model::find($id);
+        
+        if ($appointment) 
+        {
+            $appointment->delete();
+        }
+        else
+        {
+            return response()->json([
+                'success' => false,
+                'message' => 'Appointment not found!'
+            ], 400);
+        }
+        return response()->json([
+            'success' => true,
+            'message' => 'Appointment deleted successfully!'
+        ], 200);
+    }
+
+    public function editAppointment($request,$id){
+
+    	$appointment = $this->model::where('id',$id)->update($request);
+        
+        if ($appointment) 
+        {
+	        return response()->json([
+	            'success' => true,
+	            'message' => 'Appointment edit successfully!'
+	        ], 200);
+        }
+            return response()->json([
+                'success' => false,
+                'message' => 'Appointment not found!'
+            ], 400);
+    }
     
 
 
