@@ -23,10 +23,27 @@ class AppointmentController extends Controller
         if ($response && $response->getStatusCode() == 400) {
             return $response;
         }
+        try {
+            // 1012JS Testing postal code
+            $address = app('api.postcode')->fetchAddress($request->appointment_address, 1);
+
+        } catch (\Exception $e) {
+            
+            return response()->json([
+                'error' => $e->getMessage(),
+                'success' => false
+            ], 400);
+           
+        }
+ 
         $input=$request->all();
+        $input['appointment_address']=$address->getStreet().','.$address->getHouseNumber().','.$address->getCity();
+        $input['appointment_lat']=$address->getLatitude();
+        $input['appointment_long']=$address->getLongitude();
+
         $date=date_create($input['date']);
         $input['date']=date_format($date,"Y/m/d");
-        
+
         $response = $this->appointmentRepo->create($input);
 
         return $response;
