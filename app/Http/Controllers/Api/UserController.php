@@ -62,48 +62,6 @@ class UserController extends Controller
  
     }
  
-    // public function logout(Request $request)
-    // {
-
-    //     $token['token'] = $request->bearerToken();
-    //     //valid credential
-    //     $validator = Validator::make($token, [
-    //         'token' => 'required'
-    //     ]);
-
-    //     //Send failed response if request is not valid
-    //     if ($validator->fails()) {
-    //         return response()->json([
-    //             'success' => false,
-    //             'errors' => $validator->messages()
-    //         ], 400);
-    //     }
- 
-    //     try {
-    //         JWTAuth::invalidate($request->token);
- 
-    //         return response()->json([
-    //             'success' => true,
-    //             'message' => 'User logged out successfully'
-    //         ]);
-    //     } catch (JWTException $exception) {
-    //         return response()->json([
-    //             'success' => false,
-    //             'message' => 'Sorry, the user cannot be logged out'
-    //         ], 500);
-    //     }
-    // }
- 
-    // public function getAuthUser(Request $request)
-    // {
-    //     $this->validate($request, [
-    //         'token' => 'required'
-    //     ]);
- 
-    //     $user = JWTAuth::authenticate($request->token);
- 
-    //     return response()->json(['user' => $user]);
-    // }
      /**
      * @param Request $request
      * @return $this|false|string
@@ -117,7 +75,7 @@ class UserController extends Controller
             'email' => 'required|email|unique:users',
             'password' => 'required|string|min:6|max:50|confirmed',
             'phone' => 'required|unique:users|max:13',
-            'address' => 'required'
+            // 'address' => 'required'
         ]);
         //Send failed response if request is not valid
         if ($validator->fails()) {
